@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://ce1ydmg3dourf"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_wckig"]
+[ext_resource type="PackedScene" uid="uid://bdfp7e3cksbtt" path="res://player.tscn" id="2_6h8gy"]
+
+[sub_resource type="Animation" id="Animation_7w424"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_wfcdr"]
+resource_name = "scroll"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gdd68"]
+_data = {
+"RESET": SubResource("Animation_7w424"),
+"scroll": SubResource("Animation_wfcdr")
+}
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_wckig")
+
+[node name="Player" parent="." instance=ExtResource("2_6h8gy")]
+
+[node name="Background" type="Sprite2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Background")
+libraries = {
+"": SubResource("AnimationLibrary_gdd68")
+}

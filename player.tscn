@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bdfp7e3cksbtt"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_lidq5"]
+[ext_resource type="Texture2D" uid="uid://dt2gwruoss7kj" path="res://images/bird.png" id="2_gxu56"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0nunw"]
+radius = 22.0
+height = 44.0
+
+[node name="Player" type="Area2D"]
+script = ExtResource("1_lidq5")
+
+[node name="bird" type="Sprite2D" parent="."]
+texture = ExtResource("2_gxu56")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_0nunw")
