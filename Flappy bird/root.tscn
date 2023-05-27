@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://kysq1uonlrdd"]
+
+[ext_resource type="PackedScene" uid="uid://ce1ydmg3dourf" path="res://main.tscn" id="1_feqt1"]
+[ext_resource type="PackedScene" uid="uid://bgxu4uqcwqs02" path="res://pipe.tscn" id="2_7rq1c"]
+
+[node name="Root" type="Node2D"]
+
+[node name="pipe" parent="." instance=ExtResource("2_7rq1c")]
+
+[node name="Main" parent="." instance=ExtResource("1_feqt1")]
