@@ -1,12 +1,10 @@
 extends Area2D
-
-
+signal died
 @onready var screensize = get_viewport_rect().size
 # Called when the node enters the scene tree for the first time.
 
 func _ready():
 	self.position = Vector2(screensize.x / 2, screensize.y / 2)
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 @export var speed = -500
@@ -21,9 +19,11 @@ func _input(event):
 		speed = -500
 		
 func _on_area_entered(area):
-	print(area.name)
 	if area.name == 'pipe':
 		game_over()
 	
 func game_over():
+	died.emit()
 	set_process(false)
+	
+

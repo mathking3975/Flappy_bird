@@ -1,13 +1,41 @@
-[gd_scene load_steps=6 format=3 uid="uid://ce1ydmg3dourf"]
+[gd_scene load_steps=8 format=3 uid="uid://ce1ydmg3dourf"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_wckig"]
 [ext_resource type="PackedScene" uid="uid://bdfp7e3cksbtt" path="res://player.tscn" id="2_6h8gy"]
+[ext_resource type="Texture2D" uid="uid://bv4su3yufpr7e" path="res://images/background.png" id="3_rswta"]
+[ext_resource type="PackedScene" uid="uid://bgxu4uqcwqs02" path="res://pipe.tscn" id="4_g5tck"]
 
 [sub_resource type="Animation" id="Animation_7w424"]
-length = 0.001
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Background:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(480, 0, 480, 800)]
+}
 
 [sub_resource type="Animation" id="Animation_wfcdr"]
 resource_name = "scroll"
+length = 10.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Background:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4.5, 5.5, 10),
+"transitions": PackedFloat32Array(1, 1e-05, 1, 1),
+"update": 0,
+"values": [Rect2(0, 0, 480, 800), Rect2(480, 0, 480, 800), Rect2(-480, 0, 480, 800), Rect2(0, 0, 480, 800)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gdd68"]
 _data = {
@@ -18,12 +46,51 @@ _data = {
 [node name="Main" type="Node2D"]
 script = ExtResource("1_wckig")
 
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(1, -1)
+scale = Vector2(0.997917, 1.00125)
+texture = ExtResource("3_rswta")
+centered = false
+region_enabled = true
+region_rect = Rect2(480, 0, 480, 800)
+
 [node name="Player" parent="." instance=ExtResource("2_6h8gy")]
 
-[node name="Background" type="Sprite2D" parent="."]
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-root_node = NodePath("../Background")
+autoplay = "scroll"
 libraries = {
 "": SubResource("AnimationLibrary_gdd68")
 }
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 210.0
+offset_top = 368.0
+offset_right = 275.0
+offset_bottom = 500.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="RestartButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+disabled = true
+text = "Restart"
+
+[node name="pipe" parent="." instance=ExtResource("4_g5tck")]
+
+[node name="StartTimer" type="Timer" parent="pipe"]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="died" from="Player" to="pipe" method="_on_player_died"]
+[connection signal="pressed" from="VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="clear" from="pipe" to="." method="_on_clear"]

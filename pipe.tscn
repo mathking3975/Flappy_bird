@@ -9,10 +9,14 @@ size = Vector2(70, 695)
 [node name="pipe" type="Area2D"]
 script = ExtResource("1_kkxq5")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(1.11186e-10, -851)
+shape = SubResource("RectangleShape2D_sl4yn")
+
+[node name="pipe" type="Sprite2D" parent="."]
 texture = ExtResource("2_j4hro")
 
-[node name="Sprite2D" type="Sprite2D" parent="Sprite2D"]
+[node name="Sprite2D" type="Sprite2D" parent="pipe"]
 position = Vector2(0, -850)
 rotation = 3.14159
 texture = ExtResource("2_j4hro")
@@ -21,6 +25,11 @@ texture = ExtResource("2_j4hro")
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_sl4yn")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionShape2D"]
-position = Vector2(0, -851.5)
-shape = SubResource("RectangleShape2D_sl4yn")
+[node name="EndTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
